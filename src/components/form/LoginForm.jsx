@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import {
     Form, Icon, Input, Button, message
 } from 'antd'
-import { request } from '../../../utils/AxiosRequest'
-import { API } from '../../../config/api.config'
-import store from '../../../utils/store'
+import { request } from '../../utils/AxiosRequest'
+import { API } from '../../config/api.config'
+import store from '../../utils/store'
 
 
 class LoginForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const r = ()=>{this.props.history.replace('/')}
+        const r = () => window.location.reload()
         
         this.props.form.validateFields((err, values) => {
             if (!err) {
