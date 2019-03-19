@@ -42,6 +42,7 @@ function request(url, data = {}, method = "GET", obj) {
                 }
             })
             .catch(err => {
+                console.error(err)
                 message.error("网络异常或其他错误")
             })
     } else {
@@ -76,6 +77,7 @@ function request(url, data = {}, method = "GET", obj) {
                 }
             })
             .catch(err => {
+                console.error(err)
                 message.error("网络异常或其他错误")
             })
     }

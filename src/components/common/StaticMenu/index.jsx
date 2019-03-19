@@ -15,9 +15,23 @@ export default class StaticMenu extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.currentKey !== this.state.currentKey){
+      this.setState({
+        currentKey:nextProps.currentKey
+      })
+    }
+  }
+
   handleClick(e) {
-    
+    this.setState({
+      currentKey:e.key
+    })
     switch(e.key){
+      case "1":{
+        this.props.history.replace(PAGE.INDEX)
+        break;
+      }
       case "2":{
         this.props.history.replace(PAGE.MATERIAL_TYPE)
         break;
@@ -31,11 +45,10 @@ export default class StaticMenu extends Component {
       case "6":{
         store.clear('token')
         store.clear('user')
-        this.props.history.replace(PAGE.INDEX)
+        window.location.reload()
         break;
       }
       default:{
-        console.log(2)
       }
       
     }
@@ -48,7 +61,7 @@ export default class StaticMenu extends Component {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={[this.state.currentKey]}
+          selectedKeys={[this.state.currentKey]}
           style={{ lineHeight: '64px', position: 'absolute', right: '50px' }}
           onClick={this.handleClick.bind(this)}
         >

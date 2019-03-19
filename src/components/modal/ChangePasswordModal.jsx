@@ -28,7 +28,6 @@ export default class ChangePasswordModal extends Component {
                 <Modal
                     visible={visible}
                     title="修改密码"
-                    onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={null}
                 >
