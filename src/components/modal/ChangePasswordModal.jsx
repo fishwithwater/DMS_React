@@ -12,13 +12,16 @@ export default class ChangePasswordModal extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            visible: nextProps.show
-        })
+        if(nextProps.show !== this.state.visible){
+            this.setState({
+                visible: nextProps.show
+            })
+        }
     }
 
     handleCancel = () => {
         this.setState({ visible: false });
+        this.props.cancelModal()
     }
 
     render() {

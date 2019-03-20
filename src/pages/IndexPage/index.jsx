@@ -3,6 +3,7 @@ import { Layout } from 'antd'
 import store from '../../utils/store'
 import StaticMenu from '../../components/common/StaticMenu'
 import MaterialTypeContent from '../MaterialTypeContent'
+import MaterialContent from '../MaterialContent'
 import { Route, Switch } from 'react-router-dom'
 import { PAGE, getHeaderKeyByUrl } from '../../config/page.config'
 
@@ -56,6 +57,8 @@ class index extends Component {
                     <div style={{ background: '#fff', padding: 24, minHeight: 280, height: '900px' }}>
                         <Switch>
                             <Route exact path={PAGE.MATERIAL_TYPE} component={MaterialTypeContent} />
+                            <Route exact path={PAGE.MATERIAL} component={MaterialContent} />
+                            MaterialContent
                         </Switch>
                     </div>
                 </Content>

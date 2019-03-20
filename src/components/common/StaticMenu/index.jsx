@@ -15,6 +15,12 @@ export default class StaticMenu extends Component {
     }
   }
 
+  cancelModal(){
+    this.setState({
+      changePasswordModalVisible: false
+    })
+  }
+
   componentWillReceiveProps(nextProps){
     if(nextProps.currentKey !== this.state.currentKey){
       this.setState({
@@ -34,6 +40,10 @@ export default class StaticMenu extends Component {
       }
       case "2":{
         this.props.history.replace(PAGE.MATERIAL_TYPE)
+        break;
+      }
+      case "3":{
+        this.props.history.replace(PAGE.MATERIAL)
         break;
       }
       case "5":{
@@ -76,7 +86,7 @@ export default class StaticMenu extends Component {
             <Menu.Item key="6">注销</Menu.Item>
           </Menu.SubMenu>
         </Menu>
-        <ChangePasswordModal show={this.state.changePasswordModalVisible}/>
+        <ChangePasswordModal show={this.state.changePasswordModalVisible} cancelModal={this.cancelModal.bind(this)}/>
       </div>
     )
   }

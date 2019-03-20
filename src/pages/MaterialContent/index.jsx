@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Table, Button, Tag, Row, Col, Tooltip, Modal, Popconfirm, message } from 'antd'
 import { request } from '../../utils/AxiosRequest'
 import { API } from '../../config/api.config'
-import { WrappedNormalChangeTypeNameForm as ChangeTypeNameForm } from '../../components/form/ChangeTypeNameForm'
-import { WrappedNormalAddTypeForm as AddTypeForm } from '../../components/form/AddTypeForm'
+import {WrappedNormalAddMaterialForm as AddMaterialForm} from '../../components/form/AddMaterialForm'
 
 export default class MaterialTypeContent extends Component {
 
@@ -24,8 +23,33 @@ export default class MaterialTypeContent extends Component {
       align: 'center',
       key: 'name',
       dataIndex: 'name',
-      title: '类别名称'
+      title: '材料名称'
     }, {
+        align: 'center',
+        key: 'spec',
+        dataIndex: 'spec',
+        title: '规格'
+      }, {
+        align: 'center',
+        key: 'unit',
+        dataIndex: 'unit',
+        title: '单位'
+      },{
+        align: 'center',
+        key: 'number',
+        dataIndex: 'number',
+        title: '总消耗数量'
+      },{
+        align: 'center',
+        key: 'price',
+        dataIndex: 'price',
+        title: '当前价格'
+      },{
+        align: 'center',
+        key: 'typename',
+        dataIndex: 'type.name',
+        title: '类别'
+      },{
       align: 'center',
       key: 'status',
       dataIndex: 'status',
@@ -124,7 +148,7 @@ export default class MaterialTypeContent extends Component {
         }
       })
     }
-    request(API.get_material_type_list_pagination, params, "GET", {
+    request(API.get_material_list_pagination, params, "GET", {
       success(res) {
         res.data.data.map(x => x['key'] = x.id)
         cb(res.data)
@@ -165,7 +189,7 @@ export default class MaterialTypeContent extends Component {
       <div>
         <Row style={{ padding: '0 0 30px 0' }}>
           <Col span={2}></Col>
-          <Button type="primary" icon="plus" onClick={this.handleAddModal.bind(this)}>新增类别</Button>
+          <Button type="primary" icon="plus" onClick={this.handleAddModal.bind(this)}>新增材料</Button>
         </Row>
         <Row>
           <Col span={1}></Col>
@@ -181,19 +205,18 @@ export default class MaterialTypeContent extends Component {
         </Row>
         <Modal
           visible={editvisible}
-          title="修改类别名称"
+          title="修改材料信息"
           onCancel={this.handleCancel.bind(this)}
           footer={null}
         >
-          <ChangeTypeNameForm data={this.state.editNameData} cancelModal={this.cancelEditNameModal.bind(this)} />
         </Modal>
         <Modal
           visible={addvisible}
-          title="新增类别"
+          title="新增材料"
           onCancel={this.handleCancel.bind(this)}
           footer={null}
         >
-          <AddTypeForm cancelModal={this.cancelAddModal.bind(this)} />
+            <AddMaterialForm/>
         </Modal>
       </div>
     )
