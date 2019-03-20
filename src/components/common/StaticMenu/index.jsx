@@ -86,7 +86,7 @@ export default class StaticMenu extends Component {
             <Menu.Item key="6">注销</Menu.Item>
           </Menu.SubMenu>
         </Menu>
-        <ChangePasswordModal show={this.state.changePasswordModalVisible} cancelModal={this.cancelModal.bind(this)}/>
+        <ChangePasswordModal show={this.state.changePasswordModalVisible} cancelModal={this.cancelModal.bind(this)} />
       </div>
     )
   }

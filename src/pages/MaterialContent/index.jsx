@@ -3,6 +3,7 @@ import { Table, Button, Tag, Row, Col, Tooltip, Modal, Popconfirm, message } fro
 import { request } from '../../utils/AxiosRequest'
 import { API } from '../../config/api.config'
 import {WrappedNormalAddMaterialForm as AddMaterialForm} from '../../components/form/AddMaterialForm'
+import {WrappedNormalChangeMaterialForm as ChangeMaterialForm} from '../../components/form/ChangeMaterialForm'
 
 export default class MaterialTypeContent extends Component {
 
@@ -108,7 +109,7 @@ export default class MaterialTypeContent extends Component {
 
   handleEditTypeName(data) {
     this.setState({
-      editNameData: data,
+      editData: data,
       editvisible: true
     })
   }
@@ -119,7 +120,7 @@ export default class MaterialTypeContent extends Component {
       this.loadTable({ page, size })
     }
 
-    request(API.update_material_type_status, { id }, "POST", {
+    request(API.update_material_status, { id }, "POST", {
       contentType: 'form',
       success: () => {
         message.success("操作成功")
@@ -160,7 +161,7 @@ export default class MaterialTypeContent extends Component {
     this.setState({ editvisible: false, addvisible: false });
   }
 
-  cancelEditNameModal() {
+  cancelEditModal() {
     const { page, size } = this.state
     this.loadTable({ page, size })
     this.setState({
@@ -208,15 +209,18 @@ export default class MaterialTypeContent extends Component {
           title="修改材料信息"
           onCancel={this.handleCancel.bind(this)}
           footer={null}
+          destroyOnClose={true}
         >
+          <ChangeMaterialForm data={this.state.editData} cancelModal={this.cancelEditModal.bind(this)}/>
         </Modal>
         <Modal
           visible={addvisible}
           title="新增材料"
           onCancel={this.handleCancel.bind(this)}
           footer={null}
+          destroyOnClose={true}
         >
-            <AddMaterialForm/>
+            <AddMaterialForm cancelModal={this.cancelAddModal.bind(this)}/>
         </Modal>
       </div>
     )

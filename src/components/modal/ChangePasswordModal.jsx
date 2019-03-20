@@ -33,6 +33,7 @@ export default class ChangePasswordModal extends Component {
                     title="修改密码"
                     onCancel={this.handleCancel}
                     footer={null}
+                    destroyOnClose={true}
                 >
                     <ChangePasswordForm cancelModal={this.handleCancel.bind(this)}/>
                 </Modal>

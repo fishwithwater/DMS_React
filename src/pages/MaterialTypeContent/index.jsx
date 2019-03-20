@@ -184,6 +184,7 @@ export default class MaterialTypeContent extends Component {
           title="修改类别名称"
           onCancel={this.handleCancel.bind(this)}
           footer={null}
+          destroyOnClose={true}
         >
           <ChangeTypeNameForm data={this.state.editNameData} cancelModal={this.cancelEditNameModal.bind(this)} />
         </Modal>
@@ -192,6 +193,7 @@ export default class MaterialTypeContent extends Component {
           title="新增类别"
           onCancel={this.handleCancel.bind(this)}
           footer={null}
+          destroyOnClose={true}
         >
           <AddTypeForm cancelModal={this.cancelAddModal.bind(this)} />
         </Modal>
