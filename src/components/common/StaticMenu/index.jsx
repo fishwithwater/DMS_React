@@ -46,6 +46,10 @@ export default class StaticMenu extends Component {
         this.props.history.replace(PAGE.MATERIAL)
         break;
       }
+      case "4":{
+        this.props.history.replace(PAGE.TEMPLATE)
+        break;
+      }
       case "5":{
         this.setState({
           changePasswordModalVisible: true

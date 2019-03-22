@@ -1,7 +1,8 @@
 const PAGE = {
     INDEX: '/',
     MATERIAL_TYPE: '/marterial/marterial-type',
-    MATERIAL: '/material/material'
+    MATERIAL: '/material/material',
+    TEMPLATE: '/template'
 }
 
 const getHeaderKeyByUrl = (url) => {
@@ -14,6 +15,9 @@ const getHeaderKeyByUrl = (url) => {
         }
         case PAGE.MATERIAL:{
             return "3";
+        }
+        case PAGE.TEMPLATE:{
+            return "4";
         }
         default: {
             return "1";
