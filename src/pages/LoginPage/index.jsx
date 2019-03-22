@@ -9,8 +9,8 @@ export default class LoginPage extends Component {
     render() {
         return (
             <LinkedAnimate>
-                <div>
-                    <Row style={{ paddingTop: '150px' }}>
+                <div style={{marginTop:'200px'}}>
+                    <Row>
                         <Col span={8}></Col>
                         <Col span={8}>
                             <Title level={1} style={{ textAlign: 'center', color: '#eeeeee', paddingBottom: '30px' }}>自来水管网材料申报管理</Title>

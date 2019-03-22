@@ -117,6 +117,7 @@ export default class MaterialTypeContent extends Component {
                     current: params.page,
                     pageSize: params.size,
                     total: res.total,
+                    showTotal:(total, range) => `当前为第 ${range[0]} 到 ${range[1]} 条数据，总共 ${total} 条数据`,
                     onChange: (page, size) => {
                         this.setState({ page, size })
                         this.loadTable({ page, size })

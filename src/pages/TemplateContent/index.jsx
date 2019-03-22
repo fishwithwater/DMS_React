@@ -40,9 +40,16 @@ export default class TemplateContent extends Component {
             align: 'center',
             key: 'action',
             title: '操作',
-            width: 200,
+            width: 300,
             render: (text, record, index) => {
                 return <div>
+                    <Tooltip title="导出xls" placement="bottom">
+                        <Button
+                            style={btnStyle}
+                            icon="cloud-download"
+                            shape="circle"
+                            onClick={this.handleDownloadTemplate.bind(this, record)} />
+                    </Tooltip>
                     <Tooltip title="编辑模板材料" placement="bottom">
                         <Button
                             style={btnStyle}
@@ -89,6 +96,7 @@ export default class TemplateContent extends Component {
                     current: params.page,
                     pageSize: params.size,
                     total: res.total,
+                    showTotal:(total, range) => `当前为第 ${range[0]} 到 ${range[1]} 条数据，总共 ${total} 条数据`,
                     onChange: (page, size) => {
                         this.setState({ page, size })
                         this.loadTable({ page, size })
@@ -144,7 +152,7 @@ export default class TemplateContent extends Component {
                 </Modal>
                 <Modal
                     visible={editTemplateVisible}
-                    title={editTemplateMaterialData ? "模板材料 - " + editTemplateMaterialData.name + " 创建于 "+editTemplateMaterialData.createTime : "模板材料"}
+                    title={editTemplateMaterialData ? "模板材料 - " + editTemplateMaterialData.name + " - 创建于 "+editTemplateMaterialData.createTime : "模板材料"}
                     onCancel={this.handleCancel.bind(this)}
                     footer={null}
                     destroyOnClose={true}
@@ -155,6 +163,10 @@ export default class TemplateContent extends Component {
                 </Modal>
             </div>
         )
+    }
+
+    handleDownloadTemplate(){
+        message.info("未完成")
     }
 
 
@@ -194,6 +206,8 @@ export default class TemplateContent extends Component {
     /**关闭模态框 */
 
     handleCancel() {
+        const { page, size } = this.state
+        this.loadTable({ page, size })
         this.setState({ editvisible: false, addvisible: false, editTemplateVisible: false });
     }
 

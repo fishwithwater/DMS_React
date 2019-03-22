@@ -48,21 +48,21 @@ class ChangePasswordForm extends Component {
                     {getFieldDecorator('old_password', {
                         rules: [{ required: true, message: '请输入原密码！' }],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="原密码" />
+                        <Input.Password prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="原密码" />
                     )}
                 </Form.Item>
                 <Form.Item>
                     {getFieldDecorator('new_password', {
                         rules: [{ required: true, message: '请输入新密码！' }],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="新密码" />
+                        <Input.Password prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="新密码" />
                     )}
                 </Form.Item>
                 <Form.Item>
                     {getFieldDecorator('confirm_password', {
                         rules: [{ required: true, message: '请输入确认密码！' }],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="确认密码" />
+                        <Input.Password prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="确认密码" />
                     )}
                 </Form.Item>
                 <Form.Item>
