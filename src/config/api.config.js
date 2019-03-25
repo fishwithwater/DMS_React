@@ -9,7 +9,7 @@ const API = {
     update_material_type_status: DOMAIN + '/material-type/able',
     add_material_type: DOMAIN + '/material-type/add',
     get_material_list_pagination: DOMAIN + '/material/list',
-    get_material_list_pagination_like:DOMAIN + '/material/search-like',
+    get_material_list_pagination_like: DOMAIN + '/material/search-like',
     get_material_with_template_status: DOMAIN + '/material/list-with-template-status',
     get_material_with_template_status_like: DOMAIN + '/material/list-with-template-status-like',
     add_material: DOMAIN + '/material/add',
@@ -24,6 +24,7 @@ const API = {
     add_template_config: DOMAIN + '/template/add-template-config',
     update_template_config: DOMAIN + '/template/update-template-config',
     delete_template_config: DOMAIN + '/template/delete-template-config',
+    download_template_excel: DOMAIN + '/template/download',
 
 }
 

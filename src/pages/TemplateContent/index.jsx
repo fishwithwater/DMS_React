@@ -165,8 +165,14 @@ export default class TemplateContent extends Component {
         )
     }
 
-    handleDownloadTemplate(){
-        message.info("未完成")
+    handleDownloadTemplate(record){
+        request(API.download_template_excel,{tid:record.id},"GET",{
+            success(res){
+                message.success("正在下载...")
+                const w = window.open('about:blank')
+                w.location.href = res.data
+            }
+        })
     }
 
 
