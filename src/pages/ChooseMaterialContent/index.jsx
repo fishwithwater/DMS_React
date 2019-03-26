@@ -142,7 +142,11 @@ export default class ChooseMaterialContent extends Component {
         const { tableParam } = this.state
         const cb = () => this.loadTable(tableParam)
         const url = type ? API.update_template_config : API.add_template_config
-        request(url, { tid: tid, mid: data.id, id: configId }, "POST", {
+        let reqData = {tid: tid, mid: data.id}
+        if(type){
+            reqData['id'] = configId
+        }
+        request(url, reqData, "POST", {
             contentType: 'form',
             success(res) {
                 message.success((type ? '替换' : '添加') + "成功！")
