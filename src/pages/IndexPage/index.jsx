@@ -5,6 +5,7 @@ import StaticMenu from '../../components/common/StaticMenu'
 import MaterialTypeContent from '../MaterialTypeContent'
 import MaterialContent from '../MaterialContent'
 import TemplateContent from '../TemplateContent'
+import MissionContent from '../MissionContent'
 import { Route, Switch } from 'react-router-dom'
 import { PAGE, getHeaderKeyByUrl } from '../../config/page.config'
 
@@ -60,6 +61,7 @@ class index extends Component {
                             <Route exact path={PAGE.MATERIAL_TYPE} component={MaterialTypeContent} />
                             <Route exact path={PAGE.MATERIAL} component={MaterialContent} />
                             <Route exact path={PAGE.TEMPLATE} component={TemplateContent}/>
+                            <Route exact path={PAGE.MISSION} component={MissionContent}/>
                         </Switch>
                     </div>
                 </Content>

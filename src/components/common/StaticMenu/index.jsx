@@ -62,6 +62,10 @@ export default class StaticMenu extends Component {
         window.location.reload()
         break;
       }
+      case "7":{
+        this.props.history.replace(PAGE.MISSION)
+        break;
+      }
       default:{
       }
       
@@ -85,6 +89,7 @@ export default class StaticMenu extends Component {
             <Menu.Item key="3">材料</Menu.Item>
           </Menu.SubMenu>
           <Menu.Item key="4"><Icon type="profile" />模版管理</Menu.Item>
+          <Menu.Item key="7"><Icon type="profile" />任务管理</Menu.Item>
           <Menu.SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{this.state.user.username ? this.state.user.username : ''}</span>}>
             <Menu.Item key="5">修改密码</Menu.Item>
             <Menu.Item key="6">注销</Menu.Item>
