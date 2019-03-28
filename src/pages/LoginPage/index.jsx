@@ -18,11 +18,11 @@ export default class LoginPage extends Component {
                         <Col span={8}></Col>
                     </Row>
                     <Row>
-                        <Col span={9}></Col>
-                        <Col span={6}>
+                        <Col xxl={9} xl={8} lg={7} md={6} sm={4} xs={1}></Col>
+                        <Col xxl={6} xl={8} lg={10} md={12} sm={16} xs={22}>
                             <LoginForm history={this.props.history} />
                         </Col>
-                        <Col span={9}></Col>
+                        <Col xxl={9} xl={8} lg={7} md={6} sm={4} xs={1}></Col>
                     </Row>
                 </div>
             </LinkedAnimate>

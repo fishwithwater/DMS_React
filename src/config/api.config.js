@@ -25,7 +25,10 @@ const API = {
     update_template_config: DOMAIN + '/template/update-template-config',
     delete_template_config: DOMAIN + '/template/delete-template-config',
     download_template_excel: DOMAIN + '/template/download',
-    list_mission_pagination: DOMAIN + '/mission/list-pagination'
+    list_mission_pagination: DOMAIN + '/mission/list-pagination',
+    add_mission: DOMAIN + '/mission/add',
+    update_mission: DOMAIN + '/mission/update',
+    delete_mission: DOMAIN + '/mission/delete'
 }
 
 export {
