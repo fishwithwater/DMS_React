@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-    Form, Icon, Input, Button, message
+    Form, Icon, Input, Button, message, Select
 } from 'antd'
 import { request } from '../../utils/AxiosRequest'
 import { API } from '../../config/api.config'
@@ -11,8 +11,23 @@ class AddMissionForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            loading: false
+            loading: false,
+            templateListFlag: false
         }
+    }
+
+    componentWillMount() {
+        const cb = (data) => {
+            this.setState({
+                templateList: data,
+                templateListFlag: true
+            })
+        }
+        request(API.list_template, {}, "GET", {
+            success(res) {
+                cb(res.data)
+            }
+        })
     }
 
     handleSubmit(e) {
@@ -33,7 +48,7 @@ class AddMissionForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { loading } = this.state
+        const { loading, templateListFlag, templateList } = this.state
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="add-mission-name-form" style={{ padding: '0 50px' }}>
                 <Form.Item>
@@ -50,6 +65,24 @@ class AddMissionForm extends Component {
                         <Input prefix={<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="任务编号" />
                     )}
                 </Form.Item>
+                {templateListFlag ? <Form.Item>
+                    {getFieldDecorator('templateId', {
+                        rules: [{ required: true, message: '请选择模版' }],
+                    })(
+                        <Select placeholder="选择模板">
+                            {templateList.map(x => {
+                                return (
+                                    <Select.Option
+                                        key={x.id}
+                                        value={x.id}
+                                    >
+                                        {x.name}
+                                    </Select.Option>
+                                )
+                            })}
+                        </Select>
+                    )}
+                </Form.Item> : <div></div>}
                 <Form.Item>
                     <Button block={true} type="primary" htmlType="submit" loading={loading} className="add-mission-form-button">
                         保存

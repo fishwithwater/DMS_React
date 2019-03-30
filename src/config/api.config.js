@@ -16,6 +16,7 @@ const API = {
     update_material: DOMAIN + '/material/update',
     update_material_status: DOMAIN + '/material/able',
     list_template_pagination: DOMAIN + '/template/list-template-pagination',
+    list_template: DOMAIN + '/template/list-template',
     add_template: DOMAIN + '/template/add-template',
     update_template: DOMAIN + '/template/update-template',
     delete_template: DOMAIN + '/template/delete-template',
@@ -28,7 +29,13 @@ const API = {
     list_mission_pagination: DOMAIN + '/mission/list-pagination',
     add_mission: DOMAIN + '/mission/add',
     update_mission: DOMAIN + '/mission/update',
-    delete_mission: DOMAIN + '/mission/delete'
+    delete_mission: DOMAIN + '/mission/delete',
+    list_mission_config_pagination: DOMAIN + '/mission/list-config-pagination',
+    list_mission_config_like_pagination: DOMAIN + '/mission/list-config-like-pagination',
+    add_mission_config: DOMAIN + '/mission/add-config',
+    update_mission_config: DOMAIN + '/mission/update-config',
+    confirm_mission_config: DOMAIN + '/mission/confirm',
+    delete_mission_config: DOMAIN + '/mission/delete-config'
 }
 
 export {

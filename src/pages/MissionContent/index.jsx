@@ -4,6 +4,7 @@ import { request } from '../../utils/AxiosRequest'
 import { API } from '../../config/api.config'
 import { WrappedNormalAddMissionForm as AddMissionForm } from '../../components/form/AddMissionForm'
 import { WrappedNormalChangeMissionForm as ChangeMissionForm } from '../../components/form/ChangeMissionForm'
+import MissionConfigContent from '../MissionConfigContent/'
 
 export default class MissionContent extends Component {
 
@@ -32,6 +33,11 @@ export default class MissionContent extends Component {
             title: '任务名称'
         }, {
             align: 'center',
+            key: 'template.name',
+            dataIndex: 'template.name',
+            title: '使用模版'
+        }, {
+            align: 'center',
             key: 'createTime',
             dataIndex: 'createTime',
             title: '创建时间'
@@ -45,11 +51,6 @@ export default class MissionContent extends Component {
             key: 'waitCount',
             dataIndex: 'waitCount',
             title: '待确认条数'
-        }, {
-            align: 'center',
-            key: 'invalidCount',
-            dataIndex: 'invalidCount',
-            title: '无效条数'
         }, {
             align: 'center',
             key: 'action',
@@ -129,7 +130,7 @@ export default class MissionContent extends Component {
     }
 
     render() {
-        const { column, loading, dataSource, pagination, addvisible, editMissionVisible } = this.state
+        const { column, loading, dataSource, pagination, addvisible, editMissionVisible,editMissionMaterialVisible,editMissionData } = this.state
         return (
             <div>
                 <Row style={{ padding: '0 0 30px 0' }}>
@@ -172,6 +173,17 @@ export default class MissionContent extends Component {
                 >
                     <ChangeMissionForm data={this.state.editMissionData} cancelModal={this.cancelEditMissionModal.bind(this)} />
                 </Modal>
+                <Modal
+                    visible={editMissionMaterialVisible}
+                    title={editMissionData?`任务材料 - ${editMissionData.name} - 创建于 ${editMissionData.createTime}`:"编辑任务材料"}
+                    onCancel={this.handleCancel.bind(this)}
+                    footer={null}
+                    destroyOnClose={true}
+                    width="96%"
+                    zIndex={200}
+                >
+                    <MissionConfigContent missionData={editMissionData}/>
+                </Modal>
             </div>
         )
     }
@@ -193,7 +205,7 @@ export default class MissionContent extends Component {
     handleCancel() {
         const { page, size } = this.state
         this.loadTable({ page, size })
-        this.setState({ editvisible: false, addvisible: false, editMissionVisible: false });
+        this.setState({ editMissionMaterialVisible: false, addvisible: false, editMissionVisible: false });
     }
 
     handleEditMissionName(data) {
@@ -203,8 +215,11 @@ export default class MissionContent extends Component {
         })
     }
     
-    handleEditMissionMaterial() {
-        message.info("暂未完成")
+    handleEditMissionMaterial(data) {
+        this.setState({
+            editMissionMaterialVisible: true,
+            editMissionData:data
+        })
     }
 
     handleDownloadMission() {

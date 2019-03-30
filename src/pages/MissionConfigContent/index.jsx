@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Row, Col, Tooltip, Button, Popconfirm, Modal, message, Input } from 'antd';
-import { API } from '../../config/api.config'
+import { Button, Tooltip, Popconfirm, Table, Modal, Row, Col, Input, message, Tag } from 'antd'
 import { request } from '../../utils/AxiosRequest'
-import ChooseMaterialContent from '../ChooseMaterialContent';
-import { WrappedNormalChangePriceForm as ChangePriceForm } from '../../components/form/ChangePriceForm'
+import { API } from '../../config/api.config'
+import {WrappedNormalChangeNumberForm as ChangeNumberForm} from '../../components/form/ChangeNumberForm'
 
-class TemplateConfigContent extends Component {
+export default class MissionConfigContent extends Component {
 
     constructor(props) {
         super(props)
@@ -29,11 +28,6 @@ class TemplateConfigContent extends Component {
             title: '规格'
         }, {
             align: 'center',
-            key: 'material.unit',
-            dataIndex: 'material.unit',
-            title: '单位'
-        }, {
-            align: 'center',
             key: 'material.type.name',
             dataIndex: 'material.type.name',
             title: '类别'
@@ -44,23 +38,57 @@ class TemplateConfigContent extends Component {
             title: '当前价格'
         }, {
             align: 'center',
+            key: 'number',
+            dataIndex: 'number',
+            title: '数量'
+        }, {
+            align: 'center',
+            key: 'material.unit',
+            dataIndex: 'material.unit',
+            title: '单位'
+        }, {
+            align: 'center',
+            key: 'waitNumber',
+            dataIndex: 'waitNumber',
+            title: '待确认数量'
+        }, {
+            align: 'center',
+            key: 'status',
+            dataIndex: 'status',
+            title: '状态',
+            render: (text, record, index) => {
+                return (
+                    <div>
+                        <Tag color={text === 2 ? 'green' : 'red'}>{text === 2 ? '正常' : '有待确认数'}</Tag>
+                    </div>
+                )
+            }
+        }, {
+            align: 'center',
             key: 'action',
             title: '操作',
             width: 200,
             render: (text, record, index) => {
                 return <div>
-                    <Tooltip title="更换材料" placement="bottom">
-                        <Button
-                            style={btnStyle}
-                            icon="swap"
-                            onClick={this.handleReplaceMaterialModal.bind(this, record)}
-                            shape="circle" />
-                    </Tooltip>
-                    <Tooltip title="修改价格" placement="bottom">
+                    <Popconfirm
+                        title={"是否将待确认数量并入数量？"}
+                        okText="是"
+                        cancelText="否"
+                        onConfirm={this.handleConfirmConfig.bind(this, record, true)}
+                        onCancel={this.handleConfirmConfig.bind(this, record, false)}
+                    >
+                        <Tooltip title="处理待确认数量" placement="bottom">
+                            <Button
+                                style={btnStyle}
+                                icon="fork"
+                                shape="circle" />
+                        </Tooltip>
+                    </Popconfirm>
+                    <Tooltip title="修改数量" placement="bottom">
                         <Button
                             style={btnStyle}
                             icon="edit"
-                            onClick={this.handleChangePriceModal.bind(this, record)}
+                            onClick={this.handleChangeNumberModal.bind(this, record)}
                             shape="circle" />
                     </Tooltip>
                     <Popconfirm
@@ -82,12 +110,9 @@ class TemplateConfigContent extends Component {
         }]
         const loading = true
         const tableParam = { page: 1, size: 10 }
-        const addConfigVisible = false
-        const changePriceVisible = false
-        this.state = { column, loading, tableParam, addConfigVisible, changePriceVisible }
+        this.state = { column, loading, tableParam }
         this.loadTable(tableParam)
     }
-
 
     loadTable(params) {
         const cb = (res) => {
@@ -109,8 +134,8 @@ class TemplateConfigContent extends Component {
                 }
             })
         }
-        params.tid = this.props.templateData.id
-        const url = params.key ? API.list_template_config_pagination_like : API.list_template_config_pagination
+        params['mission_id'] = this.props.missionData.id
+        const url = params.key ? API.list_mission_config_like_pagination : API.list_mission_config_pagination
         request(url, params, "GET", {
             success(res) {
                 res.data.data.map(x => x['key'] = x.id)
@@ -119,20 +144,8 @@ class TemplateConfigContent extends Component {
         })
     }
 
-    handleDeleteConfig(data) {
+    handleSearch(key) {
         const { tableParam } = this.state
-        const cb = () => this.loadTable(tableParam)
-        request(API.delete_template_config, { id: data.id }, "POST", {
-            contentType: "form",
-            success() {
-                message.success("删除成功")
-                cb()
-            }
-        })
-    }
-
-    handleSearch(key){
-        const {tableParam} = this.state
         tableParam.key = key === '' ? undefined : key
         this.loadTable(tableParam)
         this.setState({
@@ -140,19 +153,20 @@ class TemplateConfigContent extends Component {
         })
     }
 
-
     render() {
-        const { column, loading, dataSource, pagination, addConfigVisible, addTid, changePriceData, changePriceVisible, replaceMaterialVisible, replaceTid, replaceConfigId } = this.state
+        const { column, dataSource, loading, pagination,changeNumberVisible,changeNumberData } = this.state
         return (
             <div>
                 <Row>
                     <Col span={2}></Col>
                     <Col span={1}>
-                        <Button
-                            type="primary"
-                            icon="plus"
-                            onClick={this.handleAddConfigModal.bind(this)}
-                        >添加材料</Button>
+                        <Tooltip title={`需导入 ${this.props.missionData.template.name} 模板`} placement="bottom">
+                            <Button
+                                type="primary"
+                                icon="cloud-upload"
+                            // onClick={this.handleAddConfigModal.bind(this)}
+                            >导入模版</Button>
+                        </Tooltip>
                     </Col>
                     <Col span={6}></Col>
                     <Col span={6}>
@@ -177,83 +191,66 @@ class TemplateConfigContent extends Component {
                     <Col span={1}></Col>
                 </Row>
                 <Modal
-                    destroyOnClose={true}
-                    visible={addConfigVisible}
-                    zIndex={300}
-                    title="添加材料"
-                    width="80%"
-                    footer={null}
+                    visible={changeNumberVisible}
+                    title="修改数量"
                     onCancel={this.handleCancel.bind(this)}
-                >
-                    <ChooseMaterialContent tid={addTid} />
-                </Modal>
-                <Modal
-                    destroyOnClose={true}
-                    visible={changePriceVisible}
-                    zIndex={300}
-                    title="修改模版中的材料价格"
                     footer={null}
-                    onCancel={this.handleCancel.bind(this)}
-                >
-                    <ChangePriceForm data={changePriceData} cancelModal={this.cancelModal.bind(this)} type="update" />
-                </Modal>
-                <Modal
-                    destroyOnClose={true}
-                    visible={replaceMaterialVisible}
                     zIndex={300}
-                    title="替换材料"
-                    width="80%"
-                    footer={null}
-                    onCancel={this.handleCancel.bind(this)}
+                    destroyOnClose={true}
                 >
-                    <ChooseMaterialContent tid={replaceTid} configId={replaceConfigId} type="replace" cancelModal={this.cancelModal.bind(this)} />
+                    <ChangeNumberForm data={this.state.changeNumberData} cancelModal={this.cancelChangeNumberModal.bind(this)}/>
                 </Modal>
             </div>
         );
     }
 
-    handleAddConfigModal(id) {
-        const { templateData } = this.props
-        this.setState({
-            addConfigVisible: true,
-            addTid: templateData.id
+    handleConfirmConfig(data, isConfirm) {
+        const cb = () => {
+            const { tableParam } = this.state
+            this.loadTable(tableParam)
+        }
+
+        request(API.confirm_mission_config, { id: data.id, is_confirm: isConfirm }, "POST", {
+            contentType: 'form',
+            success(res) {
+                cb()
+                message.success("操作成功")
+            }
         })
     }
 
-    handleReplaceMaterialModal(data) {
-        const { templateData } = this.props
-        this.setState({
-            replaceMaterialVisible: true,
-            replaceTid: templateData.id,
-            replaceConfigId: data.id
+    handleDeleteConfig(data) {
+        const cb = () => {
+            const { tableParam } = this.state
+            this.loadTable(tableParam)
+        }
+
+        request(API.delete_mission_config, { id: data.id }, "POST", {
+            contentType: 'form',
+            success(res) {
+                cb()
+                message.success("删除成功")
+            }
         })
     }
 
-    handleCancel() {
+    handleChangeNumberModal(data) {
         this.setState({
-            addConfigVisible: false,
-            changePriceVisible: false,
-            replaceMaterialVisible: false
+            changeNumberVisible:true,
+            changeNumberData:data
         })
     }
-
-    handleChangePriceModal(data) {
-        data['tid'] = this.props.templateData.id
-        data['mid'] = data.id
-        this.setState({
-            changePriceVisible: true,
-            changePriceData: data
-        })
-    }
-
-    cancelModal() {
+    cancelChangeNumberModal(){
         const { tableParam } = this.state
         this.loadTable(tableParam)
         this.setState({
-            changePriceVisible: false,
-            replaceMaterialVisible: false
+            changeNumberVisible:false
+        })
+    }
+
+    handleCancel(){
+        this.setState({
+            changeNumberVisible:false
         })
     }
 }
-
-export default TemplateConfigContent;
