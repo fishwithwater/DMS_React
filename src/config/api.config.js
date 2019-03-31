@@ -35,7 +35,10 @@ const API = {
     add_mission_config: DOMAIN + '/mission/add-config',
     update_mission_config: DOMAIN + '/mission/update-config',
     confirm_mission_config: DOMAIN + '/mission/confirm',
-    delete_mission_config: DOMAIN + '/mission/delete-config'
+    confirm_all_mission_config: DOMAIN + '/mission/confirm-all',
+    delete_mission_config: DOMAIN + '/mission/delete-config',
+    upload_mission_config: DOMAIN + '/upload/upload-mission',
+    download_mission_excel: DOMAIN + '/mission/download'
 }
 
 export {

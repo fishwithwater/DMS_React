@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Button, Tooltip, Popconfirm, Table, Modal, Row, Col, Input, message, Tag } from 'antd'
 import { request } from '../../utils/AxiosRequest'
 import { API } from '../../config/api.config'
-import {WrappedNormalChangeNumberForm as ChangeNumberForm} from '../../components/form/ChangeNumberForm'
+import { WrappedNormalChangeNumberForm as ChangeNumberForm } from '../../components/form/ChangeNumberForm'
+import UploadMissionForm from '../../components/form/UploadMissionForm'
 
 export default class MissionConfigContent extends Component {
 
@@ -154,21 +155,40 @@ export default class MissionConfigContent extends Component {
     }
 
     render() {
-        const { column, dataSource, loading, pagination,changeNumberVisible,changeNumberData } = this.state
+        const { column, dataSource, loading, pagination, changeNumberVisible, changeNumberData, uploadFileVisible } = this.state
+        const { missionData } = this.props
         return (
             <div>
                 <Row>
                     <Col span={2}></Col>
-                    <Col span={1}>
-                        <Tooltip title={`需导入 ${this.props.missionData.template.name} 模板`} placement="bottom">
+                    <Col span={2}>
+                        <Tooltip title={`需导入 ${missionData.template.name} 模板`} placement="bottom">
                             <Button
                                 type="primary"
                                 icon="cloud-upload"
-                            // onClick={this.handleAddConfigModal.bind(this)}
+                                onClick={this.handleUploadFileModal.bind(this)}
                             >导入模版</Button>
                         </Tooltip>
                     </Col>
-                    <Col span={6}></Col>
+                    <Col span={1}></Col>
+                    <Col span={2}>
+                        <Popconfirm
+                            title={"确定数量吗？"}
+                            okText="是"
+                            cancelText="否"
+                            onConfirm={this.handleConfirmAll.bind(this,true)}
+                            onCancel={this.handleConfirmAll.bind(this,false)}
+                        >
+                            <Tooltip title="确认/取消待确认数量" placement="bottom">
+                                <Button
+                                    icon="fork"
+                                    type="primary" >
+                                    确认数量
+                                    </Button>
+                            </Tooltip>
+                        </Popconfirm>
+                    </Col>
+                    <Col span={1}></Col>
                     <Col span={6}>
                         <Input.Search
                             placeholder="搜索材料"
@@ -198,7 +218,17 @@ export default class MissionConfigContent extends Component {
                     zIndex={300}
                     destroyOnClose={true}
                 >
-                    <ChangeNumberForm data={this.state.changeNumberData} cancelModal={this.cancelChangeNumberModal.bind(this)}/>
+                    <ChangeNumberForm data={changeNumberData} cancelModal={this.cancelChangeNumberModal.bind(this)} />
+                </Modal>
+                <Modal
+                    visible={uploadFileVisible}
+                    title="导入模版"
+                    onCancel={this.handleCancel.bind(this)}
+                    footer={null}
+                    zIndex={300}
+                    destroyOnClose={true}
+                >
+                    <UploadMissionForm data={missionData} refreshTable={this.refreshTable.bind(this)} />
                 </Modal>
             </div>
         );
@@ -236,21 +266,47 @@ export default class MissionConfigContent extends Component {
 
     handleChangeNumberModal(data) {
         this.setState({
-            changeNumberVisible:true,
-            changeNumberData:data
+            changeNumberVisible: true,
+            changeNumberData: data
         })
     }
-    cancelChangeNumberModal(){
+    cancelChangeNumberModal() {
         const { tableParam } = this.state
         this.loadTable(tableParam)
         this.setState({
-            changeNumberVisible:false
+            changeNumberVisible: false
         })
     }
 
-    handleCancel(){
+    handleCancel() {
         this.setState({
-            changeNumberVisible:false
+            changeNumberVisible: false,
+            uploadFileVisible: false
+        })
+    }
+
+    handleUploadFileModal() {
+        this.setState({
+            uploadFileVisible: true
+        })
+    }
+
+    refreshTable() {
+        const { tableParam } = this.state
+        this.loadTable(tableParam)
+    }
+
+    handleConfirmAll(isConfirm){
+        const cb = () => {
+            const { tableParam } = this.state
+            this.loadTable(tableParam)
+        }
+        request(API.confirm_all_mission_config,{id:this.props.missionData.id,is_confirm:isConfirm},'POST',{
+            contentType:'form',
+            success(res){
+                message.success('操作成功')
+                cb()
+            }
         })
     }
 }

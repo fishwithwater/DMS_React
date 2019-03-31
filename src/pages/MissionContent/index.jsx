@@ -222,9 +222,6 @@ export default class MissionContent extends Component {
         })
     }
 
-    handleDownloadMission() {
-        message.info("暂未完成")
-    }
 
     cancelEditMissionModal() {
         const { page, size } = this.state
@@ -242,6 +239,16 @@ export default class MissionContent extends Component {
             success(res) {
                 cb()
                 message.success("删除成功")
+            }
+        })
+    }
+
+    handleDownloadMission(record){
+        request(API.download_mission_excel,{id:record.id},"GET",{
+            success(res){
+                message.success("正在下载...")
+                const w = window.open('about:blank')
+                w.location.href = res.data
             }
         })
     }
