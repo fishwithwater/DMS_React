@@ -5,6 +5,7 @@ import { API } from '../../config/api.config'
 import { WrappedNormalChangeTemplateNameForm as ChangeTemplateNameForm } from '../../components/form/ChangeTemplateNameForm'
 import { WrappedNormalAddTemplateForm as AddTemplateForm } from '../../components/form/AddTemplateForm'
 import TemplateConfigContent from '../TemplateConfigContent/'
+import UploadTemplateForm from '../../components/form/UploadTemplateForm'
 
 export default class TemplateContent extends Component {
 
@@ -96,7 +97,7 @@ export default class TemplateContent extends Component {
                     current: params.page,
                     pageSize: params.size,
                     total: res.total,
-                    showTotal:(total, range) => `当前为第 ${range[0]} 到 ${range[1]} 条数据，总共 ${total} 条数据`,
+                    showTotal: (total, range) => `当前为第 ${range[0]} 到 ${range[1]} 条数据，总共 ${total} 条数据`,
                     onChange: (page, size) => {
                         this.setState({ page, size })
                         this.loadTable({ page, size })
@@ -113,12 +114,17 @@ export default class TemplateContent extends Component {
     }
 
     render() {
-        const { column, loading, dataSource, pagination, editvisible, addvisible, editTemplateVisible, editTemplateMaterialData } = this.state
+        const { column, loading, dataSource, pagination, editvisible, addvisible, editTemplateVisible, editTemplateMaterialData, uploadModalVisible } = this.state
         return (
             <div>
                 <Row style={{ padding: '0 0 30px 0' }}>
                     <Col span={2}></Col>
-                    <Button type="primary" icon="plus" onClick={this.handleAddModal.bind(this)}>新增模板</Button>
+                    <Col span={2}>
+                        <Button type="primary" icon="plus" onClick={this.handleAddModal.bind(this)}>新增模板</Button>
+                    </Col>
+                    <Col span={2}>
+                        <Button type="primary" icon="cloud-upload" onClick={this.handleUploadModal.bind(this)}>导入模板</Button>
+                    </Col>
                 </Row>
                 <Row>
                     <Col span={1}></Col>
@@ -159,15 +165,25 @@ export default class TemplateContent extends Component {
                     width="96%"
                     zIndex={200}
                 >
-                    <TemplateConfigContent templateData={editTemplateMaterialData}/>
+                    <TemplateConfigContent templateData={editTemplateMaterialData} />
+                </Modal>
+                <Modal
+                    visible={uploadModalVisible}
+                    title="导入模版"
+                    onCancel={this.handleCancel.bind(this)}
+                    footer={null}
+                    zIndex={300}
+                    destroyOnClose={true}
+                >
+                    <UploadTemplateForm refreshTable={this.refreshTable.bind(this)} />
                 </Modal>
             </div>
         )
     }
 
-    handleDownloadTemplate(record){
-        request(API.download_template_excel,{tid:record.id},"GET",{
-            success(res){
+    handleDownloadTemplate(record) {
+        request(API.download_template_excel, { tid: record.id }, "GET", {
+            success(res) {
                 message.success("正在下载...")
                 const w = window.open('about:blank')
                 w.location.href = res.data
@@ -214,7 +230,7 @@ export default class TemplateContent extends Component {
     handleCancel() {
         const { page, size } = this.state
         this.loadTable({ page, size })
-        this.setState({ editvisible: false, addvisible: false, editTemplateVisible: false });
+        this.setState({ editvisible: false, addvisible: false, editTemplateVisible: false, uploadModalVisible: false });
     }
 
     cancelAddModal() {
@@ -238,6 +254,17 @@ export default class TemplateContent extends Component {
         this.loadTable({ page, size })
         this.setState({
             editTemplateVisible: false
+        })
+    }
+
+    refreshTable() {
+        const { page, size } = this.state
+        this.loadTable({ page, size })
+    }
+
+    handleUploadModal() {
+        this.setState({
+            uploadModalVisible: true
         })
     }
 }

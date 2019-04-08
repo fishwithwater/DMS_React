@@ -100,7 +100,7 @@ class TemplateConfigContent extends Component {
                     total: res.total,
                     showTotal: (total, range) => `当前为第 ${range[0]} 到 ${range[1]} 条数据，总共 ${total} 条数据`,
                     onChange: (page, size) => {
-                        const tableParam = this.state
+                        const {tableParam} = this.state
                         tableParam.page = page
                         tableParam.size = size
                         this.setState({ tableParam })
