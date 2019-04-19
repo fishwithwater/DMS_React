@@ -48,11 +48,8 @@ class AddMissionForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-<<<<<<< HEAD
-        const { loading, templateListFlag } = this.state
-=======
+
         const { loading, templateListFlag, templateList } = this.state
->>>>>>> ed923eb79ab68d6377d15f18d4d3021ecbca28b6
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="add-mission-name-form" style={{ padding: '0 50px' }}>
                 <Form.Item>
@@ -69,32 +66,19 @@ class AddMissionForm extends Component {
                         <Input prefix={<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="任务编号" />
                     )}
                 </Form.Item>
-<<<<<<< HEAD
-                {templateListFlag ? <Form.Item label="类别">
-                    {getFieldDecorator('tid', {
-                        rules: [{ required: true, message: '请选择类别' }],
-                    })(
-                        <Select placeholder="选择类别">
-                            {templateListFlag.map(x => {
-=======
+
                 {templateListFlag ? <Form.Item>
                     {getFieldDecorator('templateId', {
                         rules: [{ required: true, message: '请选择模版' }],
                     })(
                         <Select placeholder="选择模板">
                             {templateList.map(x => {
->>>>>>> ed923eb79ab68d6377d15f18d4d3021ecbca28b6
                                 return (
                                     <Select.Option
                                         key={x.id}
                                         value={x.id}
-<<<<<<< HEAD
-                                        disabled={x.status === 1 ? true : false} >
-                                        {x.name}{x.status === 1 ? '(已禁用)' : ''}
-=======
                                     >
                                         {x.name}
->>>>>>> ed923eb79ab68d6377d15f18d4d3021ecbca28b6
                                     </Select.Option>
                                 )
                             })}
