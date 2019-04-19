@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Tooltip, Popconfirm, Table, Modal, Row, Col, Input, message, Tag } from 'antd'
 import { request } from '../../utils/AxiosRequest'
 import { API } from '../../config/api.config'
-import { WrappedNormalChangeNumberForm as ChangeNumberForm } from '../../components/form/ChangeNumberForm'
+import { WrappedNormalChangeNumberAndWaitNumberForm as ChangeNumberAndWaitNumberForm } from '../../components/form/ChangeNumberAndWaitNumberForm'
 import UploadMissionForm from '../../components/form/UploadMissionForm'
 
 export default class MissionConfigContent extends Component {
@@ -41,7 +41,7 @@ export default class MissionConfigContent extends Component {
             align: 'center',
             key: 'number',
             dataIndex: 'number',
-            title: '数量'
+            title: '初始数量'
         }, {
             align: 'center',
             key: 'material.unit',
@@ -51,27 +51,38 @@ export default class MissionConfigContent extends Component {
             align: 'center',
             key: 'waitNumber',
             dataIndex: 'waitNumber',
-            title: '待确认数量'
-        }, {
+            title: '使用数量'
+        }, 
+        {
             align: 'center',
-            key: 'status',
-            dataIndex: 'status',
-            title: '状态',
-            render: (text, record, index) => {
-                return (
-                    <div>
-                        <Tag color={text === 2 ? 'green' : 'red'}>{text === 2 ? '正常' : '有待确认数'}</Tag>
-                    </div>
-                )
+            key: 'remain',
+            dataIndex: 'waitNumber',
+            title: '剩余数量',
+            render:(text,record,index)=>{
+                return record.number - record.waitNumber
             }
-        }, {
+        }, 
+        // {
+        //     align: 'center',
+        //     key: 'status',
+        //     dataIndex: 'status',
+        //     title: '状态',
+        //     render: (text, record, index) => {
+        //         return (
+        //             <div>
+        //                 <Tag color={text === 2 ? 'green' : 'red'}>{text === 2 ? '正常' : '有待确认数'}</Tag>
+        //             </div>
+        //         )
+        //     }
+        // }, 
+        {
             align: 'center',
             key: 'action',
             title: '操作',
             width: 200,
             render: (text, record, index) => {
                 return <div>
-                    <Popconfirm
+                    {/* <Popconfirm
                         title={"是否将待确认数量并入数量？"}
                         okText="是"
                         cancelText="否"
@@ -84,7 +95,7 @@ export default class MissionConfigContent extends Component {
                                 icon="fork"
                                 shape="circle" />
                         </Tooltip>
-                    </Popconfirm>
+                    </Popconfirm> */}
                     <Tooltip title="修改数量" placement="bottom">
                         <Button
                             style={btnStyle}
@@ -126,7 +137,7 @@ export default class MissionConfigContent extends Component {
                     total: res.total,
                     showTotal: (total, range) => `当前为第 ${range[0]} 到 ${range[1]} 条数据，总共 ${total} 条数据`,
                     onChange: (page, size) => {
-                        const tableParam = this.state
+                        const {tableParam} = this.state
                         tableParam.page = page
                         tableParam.size = size
                         this.setState({ tableParam })
@@ -172,7 +183,7 @@ export default class MissionConfigContent extends Component {
                     </Col>
                     <Col span={1}></Col>
                     <Col span={2}>
-                        <Popconfirm
+                        {/* <Popconfirm
                             title={"确定数量吗？"}
                             okText="是"
                             cancelText="否"
@@ -186,7 +197,7 @@ export default class MissionConfigContent extends Component {
                                     确认数量
                                     </Button>
                             </Tooltip>
-                        </Popconfirm>
+                        </Popconfirm> */}
                     </Col>
                     <Col span={1}></Col>
                     <Col span={6}>
@@ -218,7 +229,7 @@ export default class MissionConfigContent extends Component {
                     zIndex={300}
                     destroyOnClose={true}
                 >
-                    <ChangeNumberForm data={changeNumberData} cancelModal={this.cancelChangeNumberModal.bind(this)} />
+                    <ChangeNumberAndWaitNumberForm data={changeNumberData} cancelModal={this.cancelChangeNumberModal.bind(this)} />
                 </Modal>
                 <Modal
                     visible={uploadFileVisible}
