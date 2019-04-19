@@ -16,6 +16,7 @@ const API = {
     update_material: DOMAIN + '/material/update',
     update_material_status: DOMAIN + '/material/able',
     list_template_pagination: DOMAIN + '/template/list-template-pagination',
+    list_template: DOMAIN + '/template/list-template',
     add_template: DOMAIN + '/template/add-template',
     update_template: DOMAIN + '/template/update-template',
     delete_template: DOMAIN + '/template/delete-template',

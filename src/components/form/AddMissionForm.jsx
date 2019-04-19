@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-    Form, Icon, Input, Button, message
+    Form, Icon, Input, Button, message, Select
 } from 'antd'
 import { request } from '../../utils/AxiosRequest'
 import { API } from '../../config/api.config'
@@ -33,7 +33,7 @@ class AddMissionForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { loading } = this.state
+        const { loading, templateListFlag } = this.state
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="add-mission-name-form" style={{ padding: '0 50px' }}>
                 <Form.Item>
@@ -50,6 +50,24 @@ class AddMissionForm extends Component {
                         <Input prefix={<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="任务编号" />
                     )}
                 </Form.Item>
+                {templateListFlag ? <Form.Item label="类别">
+                    {getFieldDecorator('tid', {
+                        rules: [{ required: true, message: '请选择类别' }],
+                    })(
+                        <Select placeholder="选择类别">
+                            {templateListFlag.map(x => {
+                                return (
+                                    <Select.Option
+                                        key={x.id}
+                                        value={x.id}
+                                        disabled={x.status === 1 ? true : false} >
+                                        {x.name}{x.status === 1 ? '(已禁用)' : ''}
+                                    </Select.Option>
+                                )
+                            })}
+                        </Select>
+                    )}
+                </Form.Item> : <div></div>}
                 <Form.Item>
                     <Button block={true} type="primary" htmlType="submit" loading={loading} className="add-mission-form-button">
                         保存
