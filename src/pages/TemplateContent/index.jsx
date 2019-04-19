@@ -152,7 +152,7 @@ export default class TemplateContent extends Component {
                 </Modal>
                 <Modal
                     visible={editTemplateVisible}
-                    title={editTemplateMaterialData ? "模板材料 - " + editTemplateMaterialData.name + " - 创建于 "+editTemplateMaterialData.createTime : "模板材料"}
+                    title={editTemplateMaterialData ? `模板材料 - ${editTemplateMaterialData.name} - 创建于 ${editTemplateMaterialData.createTime}` : "模板材料"}
                     onCancel={this.handleCancel.bind(this)}
                     footer={null}
                     destroyOnClose={true}

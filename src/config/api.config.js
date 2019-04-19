@@ -29,7 +29,16 @@ const API = {
     list_mission_pagination: DOMAIN + '/mission/list-pagination',
     add_mission: DOMAIN + '/mission/add',
     update_mission: DOMAIN + '/mission/update',
-    delete_mission: DOMAIN + '/mission/delete'
+    delete_mission: DOMAIN + '/mission/delete',
+    list_mission_config_pagination: DOMAIN + '/mission/list-config-pagination',
+    list_mission_config_like_pagination: DOMAIN + '/mission/list-config-like-pagination',
+    add_mission_config: DOMAIN + '/mission/add-config',
+    update_mission_config: DOMAIN + '/mission/update-config',
+    confirm_mission_config: DOMAIN + '/mission/confirm',
+    confirm_all_mission_config: DOMAIN + '/mission/confirm-all',
+    delete_mission_config: DOMAIN + '/mission/delete-config',
+    upload_mission_config: DOMAIN + '/upload/upload-mission',
+    download_mission_excel: DOMAIN + '/mission/download'
 }
 
 export {

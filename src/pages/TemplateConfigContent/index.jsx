@@ -134,7 +134,6 @@ class TemplateConfigContent extends Component {
     handleSearch(key){
         const {tableParam} = this.state
         tableParam.key = key === '' ? undefined : key
-        console.log(tableParam)
         this.loadTable(tableParam)
         this.setState({
             tableParam
