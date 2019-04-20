@@ -68,7 +68,7 @@ export default class UploadTemplateForm extends Component {
                     <p className="ant-upload-hint">仅支持.xls格式的Excel文件，一次上传一个，数据从第三行开始，最后不能有其他内容</p>
                 </Dragger>
                 <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                    <p>{errRow ? (`解析结束！有${errRow.length}条异常数据` + (errRow.length === 0 ? '' : `分别是${errRow.map(x => x + ' ')}`)) : ''}</p>
+                    <p>{errRow ? (`解析结束！有${errRow.length}条异常数据` + (errRow.length === 0 ? '' : `分别是${errRow.map(x => ' ['+x + '] ')}`)) : ''}</p>
                 </div>
 
             </div>

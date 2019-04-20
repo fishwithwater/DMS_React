@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Tooltip, Popconfirm, Table, Modal, Row, Col, Input, message, Tag } from 'antd'
+import { Button, Tooltip, Popconfirm, Table, Modal, Row, Col, Input, message } from 'antd'
 import { request } from '../../utils/AxiosRequest'
 import { API } from '../../config/api.config'
 import { WrappedNormalChangeNumberAndWaitNumberForm as ChangeNumberAndWaitNumberForm } from '../../components/form/ChangeNumberAndWaitNumberForm'
