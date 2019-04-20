@@ -43,16 +43,6 @@ export default class MissionContent extends Component {
             title: '创建时间'
         }, {
             align: 'center',
-            key: 'validCount',
-            dataIndex: 'validCount',
-            title: '已确认条数'
-        }, {
-            align: 'center',
-            key: 'waitCount',
-            dataIndex: 'waitCount',
-            title: '待确认条数'
-        }, {
-            align: 'center',
             key: 'action',
             title: '操作',
             width: 300,

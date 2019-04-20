@@ -48,6 +48,7 @@ class AddMissionForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+
         const { loading, templateListFlag, templateList } = this.state
         return (
             <Form onSubmit={this.handleSubmit.bind(this)} className="add-mission-name-form" style={{ padding: '0 50px' }}>
@@ -65,6 +66,7 @@ class AddMissionForm extends Component {
                         <Input prefix={<Icon type="info-circle" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="任务编号" />
                     )}
                 </Form.Item>
+
                 {templateListFlag ? <Form.Item>
                     {getFieldDecorator('templateId', {
                         rules: [{ required: true, message: '请选择模版' }],
