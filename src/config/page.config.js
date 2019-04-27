@@ -9,7 +9,7 @@ const PAGE = {
 const getHeaderKeyByUrl = (url) => {
     switch (url) {
         case PAGE.INDEX: {
-            return "1";
+            return "2";
         }
         case PAGE.MATERIAL_TYPE: {
             return "2";

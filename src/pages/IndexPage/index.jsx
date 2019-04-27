@@ -58,6 +58,7 @@ class index extends Component {
                 <Content style={{ padding: '100px 50px 10px 50px' }}>
                     <div style={{ background: '#fff', padding: 24, minHeight: 280, height: '900px' }}>
                         <Switch>
+                            <Route exact path={PAGE.INDEX} component={MaterialTypeContent} />
                             <Route exact path={PAGE.MATERIAL_TYPE} component={MaterialTypeContent} />
                             <Route exact path={PAGE.MATERIAL} component={MaterialContent} />
                             <Route exact path={PAGE.TEMPLATE} component={TemplateContent}/>

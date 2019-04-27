@@ -34,10 +34,6 @@ export default class StaticMenu extends Component {
       currentKey:e.key
     })
     switch(e.key){
-      case "1":{
-        this.props.history.replace(PAGE.INDEX)
-        break;
-      }
       case "2":{
         this.props.history.replace(PAGE.MATERIAL_TYPE)
         break;
@@ -83,7 +79,6 @@ export default class StaticMenu extends Component {
           style={{ lineHeight: '64px', position: 'absolute', right: '50px' }}
           onClick={this.handleClick.bind(this)}
         >
-          <Menu.Item key="1"><Icon type="home" />首页</Menu.Item>
           <Menu.SubMenu title={<span className="submenu-title-wrapper"><Icon type="build" />材料管理</span>}>
             <Menu.Item key="2">材料类别</Menu.Item>
             <Menu.Item key="3">材料</Menu.Item>
