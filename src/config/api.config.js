@@ -1,4 +1,4 @@
-const DOMAIN = 'http://localhost:8080'
+const DOMAIN = 'http://114.116.30.153:8080'
 
 const API = {
     login: DOMAIN + '/login',
